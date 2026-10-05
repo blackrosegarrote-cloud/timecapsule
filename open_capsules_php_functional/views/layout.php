@@ -90,4 +90,4 @@ $navLink = function (string $key, string $href, string $label) use ($nav): strin
 </html>
 
 
-<?php print(helloworld); ?>
+print(helloworld);

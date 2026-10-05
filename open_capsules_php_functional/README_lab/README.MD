@@ -22,7 +22,7 @@
 
 **Ссылка на публичный репозиторий в организации GitHub**
 
-- 
+- https://github.com/blackrosegarrote-cloud/timecapsule
 
 ## Цель работы
 

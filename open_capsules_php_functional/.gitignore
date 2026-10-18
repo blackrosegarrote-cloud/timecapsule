@@ -5,3 +5,4 @@
 /storage/sessions/*
 !/storage/sessions/.gitkeep
 /storage/*.log
+scripts/.nat-state

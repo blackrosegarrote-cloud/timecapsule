@@ -470,6 +470,10 @@ sudo dnf -y update
 ### Задание 14. Архитектура и решение
 
 ![alt](images/scheme_lab3.png)
+Схема архитектуры
+
+**Сcылка на adr0002-database-placement:**  
+https://github.com/blackrosegarrote-cloud/timecapsule/blob/main/open_capsules_php_functional/docs/adr/0002-database-placement.md
 
 ### Контрольные вопросы
 

@@ -446,6 +446,9 @@ composer install --no-dev --optimize-autoloader
 
 Схема развёртывания приложения по правилам AWS.
 
+**Ссылка на adr0002:**  
+https://github.com/blackrosegarrote-cloud/timecapsule/blob/main/open_capsules_php_functional/docs/adr/0001-deploy-method.md
+
 ### Контрольные вопросы
 
 **1. Как проходит запрос от браузера до базы данных в вашем развёртывании? Какую роль играет каждая программа?**

@@ -54,10 +54,10 @@
 
 ### Задание 3. Internet Gateway и таблицы маршрутов
 
-![alt](images/public_route.png)
+![alt](images/public_route.png)  
 Маршруты таблицы `public-rt` и привязка подсетей `public-a` и `public-b`.
 
-![alt](images/private_route.png)
+![alt](images/private_route.png)  
 Локальный маршрут таблицы `private-rt` и привязка подсетей `private-a` и `private-b`.
 
 **Вопросы**
@@ -70,13 +70,13 @@
 
 ### Задание 4. Security Group
 
-![alt](images/bastion_inbound_rules.png)
+![alt](images/bastion_inbound_rules.png)  
 Входящее правило `bastion-sg`, разрешающее SSH с моего IP-адреса.
 
-![alt](images/web_inbound_rules.png)
+![alt](images/web_inbound_rules.png)  
 Входящие правила `web-sg` для HTTP из интернета и SSH от `bastion-sg`.
 
-![alt](images/db_inbound_rules.png)
+![alt](images/db_inbound_rules.png)  
 Входящие правила `db-sg` для PostgreSQL от `web-sg` и SSH от `bastion-sg`.
 
 **Настроенные правила**
@@ -109,7 +109,7 @@ systemctl enable --now nginx
 
 Для всех экземпляров выбран Amazon Linux 2023 и тип `t3.micro`.
 
-![alt](images/test_web_private_ip.png)
+![alt](images/test_web_private_ip.png)  
 Страница `web-server` в браузере с именем сервера и его приватным IP-адресом.
 
 **Подключение через bastion**
@@ -135,7 +135,7 @@ Host db
     ProxyJump bastion
 ```
 
-![alt](images/installing_pgsql_problem.png)
+![alt](images/installing_pgsql_problem.png)  
 Зависшая установка PostgreSQL на `db-server` из-за отсутствия выхода в интернет.
 
 **Вопросы**
@@ -148,7 +148,7 @@ Host db
 
 ### Задание 6. Временный NAT Gateway
 
-![alt](images/curl_db_server.png)
+![alt](images/curl_db_server.png)  
 Вывод `curl https://checkip.amazonaws.com` на `db-server` с публичным Elastic IP NAT Gateway.
 
 ```bash
@@ -195,10 +195,10 @@ sudo -u postgres psql -c "CREATE DATABASE lab3 OWNER student;"
 
 **Удаление NAT Gateway**
 
-![alt](images/delete_natga.png)
+![alt](images/delete_natga.png)  
 Список NAT gateways, в котором `timecapsule-dev-nat-a` находится в состоянии `Deleted`.
 
-![alt](images/rt_blackhole.png)
+![alt](images/rt_blackhole.png)  
 Маршрут `0.0.0.0/0` в таблице `private-rt` в состоянии `Blackhole` после удаления NAT Gateway.
 
 **Вопросы**
@@ -217,7 +217,7 @@ sudo -u postgres psql -c "CREATE DATABASE lab3 OWNER student;"
 sudo dnf -y install postgresql16
 ```
 
-![alt](images/check_availability_db_web.png)
+![alt](images/check_availability_db_web.png)  
 Результат запроса `SELECT version()` через `psql` с `web-server`.
 
 ```bash
@@ -226,14 +226,14 @@ psql -h <приватный IP db-server> -U student -d lab3 -c "SELECT version(
 
 **Проверка Security Group**
 
-![alt](images/port_availability_db_web.png)
+![alt](images/port_availability_db_web.png)  
 Проверка порта 5432 с `web-server`, результат `open`.
 
 ```bash
 timeout 5 bash -c '</dev/tcp/<приватный IP db-server>/5432' && echo open || echo closed
 ```
 
-![alt](images/availability_db_bastion.png)
+![alt](images/availability_db_bastion.png)  
 Проверка порта 5432 с `bastion`, результат `closed`.
 
 **Вопрос**
@@ -253,7 +253,7 @@ timeout 5 bash -c '</dev/tcp/<приватный IP db-server>/5432' && echo ope
 
 **Проверка Network ACL**
 
-![alt](images/check_acl_rule.png)
+![alt](images/check_acl_rule.png)  
 После правила `Deny` в Network ACL SSH и сайт с моего IP-адреса недоступны.
 
 Сайт открывается с телефона через мобильный интернет, поскольку используется другой IP-адрес.
@@ -271,7 +271,7 @@ timeout 5 bash -c '</dev/tcp/<приватный IP db-server>/5432' && echo ope
 
 **Проверка имён и тегов**
 
-![alt](images/tag_editor.png)
+![alt](images/tag_editor.png)  
 Список ресурсов в Tag Editor с фильтром `Project = timecapsule`.
 
 **Вопросы**
@@ -307,8 +307,7 @@ timeout 5 bash -c '</dev/tcp/<приватный IP db-server>/5432' && echo ope
 
 Выделение Elastic IP `timecapsule-dev-app-eip` и привязка к экземпляру `app-server`. В файле `.env` изменён `APP_URL`, после чего перезагружена конфигурация PHP-FPM.
 
-![alt](images/connection_eip.png)
-
+![alt](images/connection_eip.png)  
 Приложение открывается в браузере по постоянному Elastic IP.
 
 **Вопросы**
@@ -348,16 +347,13 @@ sudo systemctl restart postgresql
 
 ### Задание 11. Приватная зона Route 53
 
-![alt](images/create_hostedzone.png)
-
+![alt](images/create_hostedzone.png)  
 Создание приватной зоны `timecapsule.internal`, связанной с VPC `timecapsule-dev-vpc`. Запись `db.timecapsule.internal` типа A указывает на приватный IP `db-server` с TTL 60 секунд.
 
-![alt](images/app_check_hz.png)
-
+![alt](images/app_check_hz.png)  
 Команда `dig +short db.timecapsule.internal` на `app-server` возвращает приватный адрес базы.
 
-![alt](images/userdevice_check_hz.png)
-
+![alt](images/userdevice_check_hz.png)  
 Проверка `nslookup db.timecapsule.internal` на домашнем компьютере не находит приватное имя.
 
 **Вопросы**
@@ -382,8 +378,7 @@ pg_dump -h localhost -U timecapsule -d timecapsule -f timecapsule.sql
 psql -h db.timecapsule.internal -U timecapsule -d timecapsule -f timecapsule.sql
 ```
 
-![alt](images/copy_old_db.png)
-
+![alt](images/copy_old_db.png)  
 Вывод `psql -f` после импорта таблиц и записей в новую базу данных.
 
 В `.env` установлены `DB_HOST=db.timecapsule.internal` и новый `DB_PASSWORD`. После обновления настроек PHP-FPM локальная служба PostgreSQL отключена.
@@ -393,8 +388,7 @@ sudo systemctl reload php-fpm
 sudo systemctl disable --now postgresql
 ```
 
-![alt](images/health_after_dbmigration.png)
-
+![alt](images/health_after_dbmigration.png)  
 Эндпоинт `/health` сообщает об успешном подключении к базе данных.
 
 ![alt](images/check_capsules.png)
@@ -416,20 +410,17 @@ sudo systemctl disable --now postgresql
 ssh app ./deploy.sh
 ```
 
-![alt](images/before_deploy.png)
-
+![alt](images/before_deploy.png)  
 Что было до деплоя.
 
-![alt](images/after_deploy.png)
-
+![alt](images/after_deploy.png)  
 После деплоя в подвале страницы отображается новая строка.
 
 **Проверка отказа базы**
 
 Сервер `db-server` остановлен для проверки поведения приложения при недоступной базе.
 
-![alt](images/heatlh_after_dbstop.png)
-
+![alt](images/heatlh_after_dbstop.png)  
 Эндпоинт `/health` показывает ошибку проверки базы при остановленном `db-server`.
 
 После повторного запуска `db-server` соединение восстановлено без изменения конфигурации приложения.
@@ -438,20 +429,17 @@ ssh app ./deploy.sh
 
 Для временного доступа к интернету используются скрипты `scripts/nat-up.sh` и `scripts/nat-down.sh`. Первый выделяет Elastic IP, создаёт NAT Gateway и маршрут, второй удаляет маршрут и шлюз, дожидается удаления и освобождает адрес.
 
-![alt](images/create_natga_script.png)
-
+![alt](images/create_natga_script.png)  
 Вывод `nat-up.sh` после создания временного NAT Gateway и маршрута.
 
 ```bash
 sudo dnf -y update
 ```
 
-![alt](images/update_dnf.png)
-
+![alt](images/update_dnf.png)  
 Вывод обновления пакетов на `db-server` через временный NAT Gateway.
 
-![alt](images/delete_natga_script.png)
-
+![alt](images/delete_natga_script.png)  
 Вывод `nat-down.sh` после удаления маршрута, NAT Gateway и освобождения Elastic IP.
 
 Идентификаторы ресурсов сохраняются во временном файле, исключённом из Git через `.gitignore`. Скрипты используют `set -euo pipefail`, регион `eu-central-1` и обязательные теги ресурсов.
@@ -469,7 +457,7 @@ sudo dnf -y update
 
 ### Задание 14. Архитектура и решение
 
-![alt](images/scheme_lab3.png)
+![alt](images/scheme_lab3.png)  
 Схема архитектуры
 
 **Сcылка на adr0002-database-placement:**  
